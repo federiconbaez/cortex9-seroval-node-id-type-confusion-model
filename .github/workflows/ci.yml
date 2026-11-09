@@ -24,3 +24,5 @@ jobs:
           node scripts/gen_results.js /tmp/results
           diff -r results /tmp/results
           cd results && sha256sum -c SHA256SUMS
+      - name: Saved diffs behind the line citations are intact
+        run: cd sources && sha256sum -c SHA256SUMS

@@ -22,8 +22,8 @@ small node format of its own (`num`, `str`, `ref`, `obj`, `seq`, `stream`,
 | Version | Source check | From |
 |---|---|---|
 | `v163` | none beyond truthiness | advisory text ("up to 1.6.3 accept any value"), no diff |
-| `pre` (1.6.5-1.6.7) | `validateNodeType` on the id's recorded type | 50926b3 L38 / L60 (removed), mark set at L78-79 |
-| `post` (1.6.8) | `instanceof` on the value | 50926b3 L43 / L66 (added), classes 3edc78b L31-46, L95-181 |
+| `pre` (1.6.5-1.6.7) | `validateNodeType` on the id's recorded type | 50926b3e:L38 / 50926b3e:L60 (removed), mark set at 50926b3e:L78-79 |
+| `post` (1.6.8) | `instanceof` on the value | 50926b3e:L43 / 50926b3e:L66 (added), classes 3edc78b4:L31-46, 3edc78b4:L95-181 |
 
 The only sink is a **counter**: a `plugin` node returns an object whose `on`
 increments `foreignCalls`. Nothing is evaluated; there is no network, file
@@ -31,8 +31,8 @@ or child-process access (checked by `test/adversarial.test.js`).
 
 A second, smaller axis models 3edc78b's serializer identity check: an
 object carrying the `__SEROVAL_SEQUENCE__` / `__SEROVAL_STREAM__` key was
-trusted as internal before (L44, L179) and is a plain object after (L45,
-L180). The model only classifies; it never emits code.
+trusted as internal before (3edc78b4:L44, 3edc78b4:L179) and is a plain object after (3edc78b4:L45,
+3edc78b4:L180). The model only classifies; it never emits code.
 
 ## Differential evidence (`results/summary.csv`)
 
@@ -43,9 +43,21 @@ L180). The model only classifies; it never emits code.
 | post | 4 | 0 | 0 | 4 | 4/4 |
 
 `p02` (plugin value reusing a Stream id) is the core case: `pre` calls the
-foreign `on` (rule `50926b3 L60-69`), `post` stops with `MALFORMED_NODE`
-(`50926b3 L66-68`). `c01` shows the same reuse is refused when the id is
+foreign `on` (rule `50926b3e:L60-69`), `post` stops with `MALFORMED_NODE`
+(`50926b3e:L66-68`). `c01` shows the same reuse is refused when the id is
 listed in `m` (`REUSED_ID_REJECTED`).
+
+## Line citations
+
+Every line citation has the form `<tag>:L<n>` or `<tag>:L<n>-<m>`: the real
+`cat -n` line(s) of the saved diff copied into `sources/`:
+
+- `50926b3e` → `sources/CVE-2026-116580_seroval_50926b3ee198.diff` (SHA-256 `27fff3e88fc2c5bbad939dcee6b5ad967a8074463e838f26b12942139b14ddd9`)
+- `3edc78b4` → `sources/CVE-2026-116580_seroval_3edc78b495ea.diff` (SHA-256 `f636af8ea11444a2ab9c93c367f2c502ec26509369d057b7946e2d3ba30917ad`)
+
+All cited ranges and the text each must contain are in `citations.tsv`;
+`test/citations.test.js` checks the SHA-256, the text of every range, and
+that no citation in the repo is missing from the table or lacks a tag.
 
 ## Run
 

@@ -13,7 +13,7 @@ test('level 2: pre checks the type recorded for the id', () => {
 });
 test('level 3: reuse an untracked id', () => {
   assert.deepEqual(m.run(g.p02_plugin_callable_reuses_stream_id, 'pre'),
-    { label: 'FOREIGN_ON_INVOKED', rule: '50926b3 L60-69', foreignCalls: 1 });
+    { label: 'FOREIGN_ON_INVOKED', rule: '50926b3e:L60-69', foreignCalls: 1 });
 });
 test('level 4: why m matters', () => {
   assert.equal(m.run(g.c01_tracked_id_reuse_is_guarded, 'pre').label, 'REUSED_ID_REJECTED');

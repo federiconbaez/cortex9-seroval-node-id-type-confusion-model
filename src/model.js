@@ -9,9 +9,9 @@
  * Versions:
  *   v163 - "<= 1.6.3 accept any value as the source" (advisory text only).
  *   pre  - 1.6.5..1.6.7: validateNodeType(id) on the type *recorded for the
- *          id* (diff 50926b3 L38, L60; mark set in L78-79).
+ *          id* (diff 50926b3e:L38, 50926b3e:L60; mark set in 50926b3e:L78-79).
  *   post - 1.6.8: isSequence/isStream on the *value* with instanceof
- *          (diff 50926b3 L43, L66; classes from 3edc78b L31-46, L95-181).
+ *          (diff 50926b3e:L43, 50926b3e:L66; classes from 3edc78b4:L31-46, 3edc78b4:L95-181).
  */
 
 class Sequence {
@@ -61,10 +61,10 @@ function assign(ctx, id, value) {
   if (!Number.isInteger(id) || id < 0) {
     throw new ModelError('BAD_ID', 'model');
   }
-  // guardIndexedValue only protects ids listed in `m` (diff 50926b3 L11,
-  // L118-120): an untracked id can be reused silently.
+  // guardIndexedValue only protects ids listed in `m` (diff 50926b3e:L11,
+  // 50926b3e:L118-120): an untracked id can be reused silently.
   if (ctx.tracked.has(id) && ctx.values.has(id)) {
-    throw new ModelError('REUSED_ID_REJECTED', '50926b3 L36-37');
+    throw new ModelError('REUSED_ID_REJECTED', '50926b3e:L36-37');
   }
   ctx.values.set(id, value);
   return value;
@@ -114,7 +114,7 @@ function deserializeInner(ctx, node) {
     }
     case 'seq': {
       const seq = assign(ctx, node.i, new Sequence([], -1, 0));
-      ctx.types.set(node.i, 'Sequence'); // 50926b3 L78-79 (removed in post)
+      ctx.types.set(node.i, 'Sequence'); // 50926b3e:L78-79 (removed in post)
       for (const v of node.a || []) {
         seq.v.push(deserialize(ctx, v));
       }
@@ -123,7 +123,7 @@ function deserializeInner(ctx, node) {
     }
     case 'stream': {
       const s = assign(ctx, node.i, new Stream());
-      // Assumed: StreamConstructor records its type (50926b3 L56-58 comment).
+      // Assumed: StreamConstructor records its type (50926b3e:L56-58 comment).
       ctx.types.set(node.i, 'StreamConstructor');
       return s;
     }
@@ -156,20 +156,20 @@ function iteratorFactory(ctx, node) {
   const { src, srcNode } = sourceOf(ctx, node);
   if (ctx.version === 'pre') {
     if (ctx.types.get(srcNode.i) !== 'Sequence') {
-      throw new ModelError('NODE_TYPE_MISMATCH', '50926b3 L38');
+      throw new ModelError('NODE_TYPE_MISMATCH', '50926b3e:L38');
     }
   }
   if (ctx.version === 'post') {
     if (!(src instanceof Sequence)) {
-      throw new ModelError('MALFORMED_NODE', '50926b3 L43-45');
+      throw new ModelError('MALFORMED_NODE', '50926b3e:L43-45');
     }
     return { kind: 'iterator', values: src.v.slice() };
   }
   if (!src) {
-    throw new ModelError('FALSY_SOURCE', '50926b3 L39-41');
+    throw new ModelError('FALSY_SOURCE', '50926b3e:L39');
   }
   if (!(src instanceof Sequence)) {
-    ctx.forged = '50926b3 L38-46';
+    ctx.forged = '50926b3e:L38, 50926b3e:L46';
     return { kind: 'FORGED_SEQUENCE_ACCEPTED' };
   }
   return { kind: 'iterator', values: src.v.slice() };
@@ -179,19 +179,19 @@ function asyncIteratorFactory(ctx, node) {
   const { src, srcNode } = sourceOf(ctx, node);
   if (ctx.version === 'pre') {
     if (ctx.types.get(srcNode.i) !== 'StreamConstructor') {
-      throw new ModelError('NODE_TYPE_MISMATCH', '50926b3 L60');
+      throw new ModelError('NODE_TYPE_MISMATCH', '50926b3e:L60');
     }
   }
   if (ctx.version === 'post' && !(src instanceof Stream)) {
-    throw new ModelError('MALFORMED_NODE', '50926b3 L66-68');
+    throw new ModelError('MALFORMED_NODE', '50926b3e:L66-68');
   }
   if (!src) {
-    throw new ModelError('FALSY_SOURCE', '50926b3 L61-63');
+    throw new ModelError('FALSY_SOURCE', '50926b3e:L61');
   }
   if (typeof src.on !== 'function') {
     throw new ModelError('NO_ON_METHOD', 'model');
   }
-  src.on({ next() {}, throw() {}, return() {} }); // 50926b3 L69: streamToAsyncIterable
+  src.on({ next() {}, throw() {}, return() {} }); // 50926b3e:L69: streamToAsyncIterable
   return { kind: 'async-iterator' };
 }
 
@@ -213,7 +213,7 @@ function run(tree, version) {
     }
     if (ctx.foreignCalls > 0) {
       label = 'FOREIGN_ON_INVOKED';
-      rule = version === 'pre' ? '50926b3 L60-69' : 'advisory <=1.6.3';
+      rule = version === 'pre' ? '50926b3e:L60-69' : 'advisory <=1.6.3';
     }
     return { label, rule, foreignCalls: ctx.foreignCalls };
   } catch (err) {
@@ -226,8 +226,8 @@ function run(tree, version) {
 
 /*
  * Serializer identity check (3edc78b): before, any object with the marker
- * key counted as a Sequence/Stream (L44, L179); after, only class instances
- * (L45, L180). The model only classifies; it never emits code.
+ * key counted as a Sequence/Stream (3edc78b4:L44, 3edc78b4:L179); after, only class instances
+ * (3edc78b4:L45, 3edc78b4:L180). The model only classifies; it never emits code.
  */
 function serializerKind(value, version) {
   if (value instanceof Sequence) return 'SEQUENCE';

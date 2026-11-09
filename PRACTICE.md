@@ -18,10 +18,10 @@ Ayuda: `node -e "const m=require('./src/model.js'); console.log(m.run(<árbol>, 
 
 3. **Reutilizar un id no rastreado.** Primero un `stream` con id 3, después
    un `plugin` con el mismo id 3 como fuente (`p02`). (`pre`:
-   `FOREIGN_ON_INVOKED`, 1 llamada, regla `50926b3 L60-69`)
+   `FOREIGN_ON_INVOKED`, 1 llamada, regla `50926b3e:L60-69`)
 4. **Para qué sirve `m`.** El mismo árbol con `m: [3]` (`c01`).
    (`REUSED_ID_REJECTED` en todas)
-5. **El fix.** `p02` en `post`. (`MALFORMED_NODE`, `50926b3 L66-68`)
+5. **El fix.** `p02` en `post`. (`MALFORMED_NODE`, `50926b3e:L66-68`)
 
 **Avanzado**
 

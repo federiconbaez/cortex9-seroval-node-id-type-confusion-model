@@ -4,7 +4,7 @@
     {
       "id": "p01_plain_object_reuses_sequence_id",
       "class": "pos",
-      "diff": "50926b3 L118-165 (upstream regression test shape)",
+      "diff": "50926b3e:L118-165 (upstream regression test shape)",
       "tree": {"m": [], "t": {"t": "obj", "i": 0, "p": {
         "a": {"t": "seq", "i": 3, "a": [{"t": "num", "s": 1}]},
         "b": {"t": "iter", "a": [{"t": "obj", "i": 3, "p": {"v": {"t": "str", "s": "x"}, "t": {"t": "num", "s": -1}}}]}}}},
@@ -13,7 +13,7 @@
     {
       "id": "p02_plugin_callable_reuses_stream_id",
       "class": "pos",
-      "diff": "50926b3 L167-185",
+      "diff": "50926b3e:L167-185",
       "tree": {"m": [], "t": {"t": "obj", "i": 0, "p": {
         "a": {"t": "stream", "i": 3},
         "b": {"t": "aiter", "a": [{"t": "plugin", "i": 3}]}}}},
@@ -22,7 +22,7 @@
     {
       "id": "p03_branded_pojo_reuses_stream_id",
       "class": "pos",
-      "diff": "3edc78b L305-314; 50926b3 L60-69",
+      "diff": "3edc78b4:L305-314; 50926b3e:L60-69",
       "tree": {"m": [], "t": {"t": "obj", "i": 0, "p": {
         "a": {"t": "stream", "i": 7},
         "b": {"t": "aiter", "a": [{"t": "plugin", "i": 7, "brand": true}]}}}},
@@ -31,14 +31,14 @@
     {
       "id": "p04_plugin_callable_fresh_id",
       "class": "pos",
-      "diff": "advisory Summary (pre-1.6.4 variant); 50926b3 L60",
+      "diff": "advisory Summary (pre-1.6.4 variant); 50926b3e:L60",
       "tree": {"m": [], "t": {"t": "aiter", "a": [{"t": "plugin", "i": 4}]}},
       "expected": {"v163": ["FOREIGN_ON_INVOKED", 1], "pre": ["NODE_TYPE_MISMATCH", 0], "post": ["MALFORMED_NODE", 0]}
     },
     {
       "id": "c01_tracked_id_reuse_is_guarded",
       "class": "control",
-      "diff": "50926b3 L11, L35-37",
+      "diff": "50926b3e:L11, 50926b3e:L35-37",
       "tree": {"m": [3], "t": {"t": "obj", "i": 0, "p": {
         "a": {"t": "stream", "i": 3},
         "b": {"t": "aiter", "a": [{"t": "plugin", "i": 3}]}}}},
@@ -47,7 +47,7 @@
     {
       "id": "n01_genuine_sequence_iterator",
       "class": "neg",
-      "diff": "50926b3 L43-47",
+      "diff": "50926b3e:L43-47",
       "tree": {"m": [], "t": {"t": "obj", "i": 0, "p": {
         "a": {"t": "seq", "i": 1, "a": [{"t": "num", "s": 1}, {"t": "num", "s": 2}]},
         "b": {"t": "iter", "a": [{"t": "ref", "i": 1}]}}}},
@@ -56,7 +56,7 @@
     {
       "id": "n02_genuine_stream_async_iterator",
       "class": "neg",
-      "diff": "50926b3 L66-70",
+      "diff": "50926b3e:L66-70",
       "tree": {"m": [], "t": {"t": "aiter", "a": [{"t": "stream", "i": 2}]}},
       "expected": {"v163": ["OK", 0], "pre": ["OK", 0], "post": ["OK", 0]}
     },
@@ -70,22 +70,22 @@
     {
       "id": "n04_inline_genuine_sequence",
       "class": "neg",
-      "diff": "50926b3 L43-47",
+      "diff": "50926b3e:L43-47",
       "tree": {"m": [], "t": {"t": "iter", "a": [{"t": "seq", "i": 5, "a": []}]}},
       "expected": {"v163": ["OK", 0], "pre": ["OK", 0], "post": ["OK", 0]}
     }
   ],
   "serializer": [
-    {"id": "s01_forged_sequence_brand", "class": "pos", "diff": "3edc78b L44-45, L208-234",
+    {"id": "s01_forged_sequence_brand", "class": "pos", "diff": "3edc78b4:L44-45, 3edc78b4:L208-234",
      "value": {"__SEROVAL_SEQUENCE__": true, "v": [1], "t": "PAYLOAD_TEXT_ONLY", "d": "PAYLOAD_TEXT_ONLY"},
      "expected": {"pre": "SEQUENCE_BRAND_TRUSTED", "post": "PLAIN_OBJECT"}},
-    {"id": "s02_forged_stream_brand", "class": "pos", "diff": "3edc78b L179-180, L305-314",
+    {"id": "s02_forged_stream_brand", "class": "pos", "diff": "3edc78b4:L179-180, 3edc78b4:L305-314",
      "value": {"__SEROVAL_STREAM__": true},
      "expected": {"pre": "STREAM_BRAND_TRUSTED", "post": "PLAIN_OBJECT"}},
-    {"id": "s03_genuine_sequence", "class": "neg", "diff": "3edc78b L45, L316-318",
+    {"id": "s03_genuine_sequence", "class": "neg", "diff": "3edc78b4:L45, 3edc78b4:L316-318",
      "value": "genuine-sequence",
      "expected": {"pre": "SEQUENCE", "post": "SEQUENCE"}},
-    {"id": "s04_genuine_stream", "class": "neg", "diff": "3edc78b L180, L301-303",
+    {"id": "s04_genuine_stream", "class": "neg", "diff": "3edc78b4:L180, 3edc78b4:L301-303",
      "value": "genuine-stream",
      "expected": {"pre": "STREAM", "post": "STREAM"}},
     {"id": "s05_plain_object", "class": "neg", "diff": "-",

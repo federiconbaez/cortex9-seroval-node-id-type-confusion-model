@@ -62,7 +62,7 @@ test('every non-OK decision cites a rule', () => {
   for (const g of cases.graphs) {
     for (const v of m.VERSIONS) {
       const r = m.run(g.tree, v);
-      if (r.label !== 'OK') assert.match(r.rule, /^(50926b3|3edc78b) L\d|^advisory/);
+      if (r.label !== 'OK') assert.match(r.rule, /^(50926b3e|3edc78b4):L\d|^advisory/);
     }
   }
 });

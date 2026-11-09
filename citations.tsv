@@ -1,0 +1,35 @@
+tag	start	end	expect	what
+50926b3e	11	11	an id missing from `m` could be reused	changeset: untracked id reuse
+50926b3e	35	37	`guardIndexedValue` forbids reusing its id	pre comment: brand forgeable, guard relied on
+50926b3e	36	37	`guardIndexedValue` forbids reusing its id	pre comment: reuse forbidden only for marked ids
+50926b3e	38	38	-  validateNodeType(ctx, node, node.a[1].i, SerovalNodeType.Sequence);	pre: node-type check on the id (iterator)
+50926b3e	39	39	-  if (!source) {	pre: falsy-source check (iterator)
+50926b3e	43	43	+  if (!isSequence(source)) {	post: value check (iterator)
+50926b3e	43	45	throw new SerovalMalformedNodeError(node.a[1]);	post: malformed node (iterator)
+50926b3e	43	47	sequenceToIterator(source)	post: iterator value check and return
+50926b3e	46	46	-  return sequenceToIterator(source as Sequence);	pre: cast and iterate
+50926b3e	56	58	only a genuine StreamConstructor node carries the mark	pre comment: stream mark
+50926b3e	60	60	-  validateNodeType(ctx, node, node.a[1].i, SerovalNodeType.StreamConstructor);	pre: node-type check on the id (async iterator)
+50926b3e	60	69	-  return streamToAsyncIterable(source as Stream<unknown>);	async iterator hunk, pre path ends in streamToAsyncIterable
+50926b3e	61	61	-  if (!source) {	pre: falsy-source check (async iterator)
+50926b3e	66	66	+  if (!isStream(source)) {	post: value check (async iterator)
+50926b3e	66	68	throw new SerovalMalformedNodeError(node.a[1]);	post: malformed node (async iterator)
+50926b3e	66	70	+  return streamToAsyncIterable(source);	post: async value check and return
+50926b3e	69	69	-  return streamToAsyncIterable(source as Stream<unknown>);	pre: streamToAsyncIterable calls on
+50926b3e	78	79	assignNodeType(ctx, node.i, SerovalNodeType.Sequence);	pre: Sequence marks its id (removed)
+50926b3e	118	120	an id missing from `m` is not tracked	upstream test comment
+50926b3e	118	165	function reusedIdTree	upstream regression tests (Sequence)
+50926b3e	167	185	it('rejects a plain object that reuses a Stream id'	upstream regression test (Stream)
+50926b3e	118	185	SerovalMalformedNodeError	upstream regression tests
+3edc78b4	31	46	+export class Sequence {	Sequence class and isSequence
+3edc78b4	44	44	-  return '__SEROVAL_SEQUENCE__' in value;	pre: marker-key identity (Sequence)
+3edc78b4	45	45	+  return value instanceof Sequence;	post: class identity (Sequence)
+3edc78b4	44	45	value instanceof Sequence	isSequence pre/post
+3edc78b4	95	181	+export class Stream<T> {	Stream class through isStream
+3edc78b4	179	179	-  return '__SEROVAL_STREAM__' in value;	pre: marker-key identity (Stream)
+3edc78b4	180	180	+  return value instanceof Stream;	post: class identity (Stream)
+3edc78b4	179	180	value instanceof Stream	isStream pre/post
+3edc78b4	208	234	`__SEROVAL_SEQUENCE__` key	upstream test: forged sequence key
+3edc78b4	301	303	isStream(createStream())).toBe(true)	upstream test: genuine Stream
+3edc78b4	305	314	expect(isStream(forged)).toBe(false);	upstream test: forged Stream marker
+3edc78b4	316	318	isSequence(createSequence([1, 2], -1, 1))).toBe(true)	upstream test: genuine Sequence
