@@ -48,6 +48,12 @@ Los rangos citados y el texto que debe contener cada uno están en
 `citations.tsv`; `test/citations.test.js` comprueba el SHA-256, el texto de
 cada rango y que ninguna cita del repo falte en la tabla o no tenga tag.
 
+Opcional: `C9_DIFF=<diff>[:<diff>]` (el diff del commit upstream descargado
+de nuevo) se compara byte a byte con la copia del repo:
+`C9_DIFF=/tmp/x.diff node --test test/citations.test.js`. Sin él ese chequeo sale como skip explícito;
+las copias del repo se verifican siempre. Aviso de licencia de las copias:
+`sources/README.md`, `sources/UPSTREAM-LICENSE`.
+
 ## Uso
 
 ```sh

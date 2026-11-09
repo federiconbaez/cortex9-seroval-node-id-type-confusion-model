@@ -81,3 +81,21 @@ test('every citation in the repo is in the table and tagged', () => {
   }
   assert.ok(seen > 0);
 });
+
+test('optional: C9_DIFF matches the in-repo copy', (t) => {
+  // C9_DIFF: one path, or several joined with path.delimiter.
+  const raw = process.env.C9_DIFF || '';
+  const paths = raw.split(path.delimiter).filter(Boolean);
+  if (paths.length === 0 || !paths.every((p) => fs.existsSync(p) && fs.statSync(p).isFile())) {
+    t.skip(`external check SKIPPED: C9_DIFF is ${raw ? `'${raw}', not existing file(s)` : 'not set'}; `
+      + 'the in-repo copies in sources/ are still fully checked');
+    return;
+  }
+  for (const p of paths) {
+    const data = fs.readFileSync(p);
+    const sha = crypto.createHash('sha256').update(data).digest('hex');
+    const tags = Object.keys(DIFFS).filter((k) => DIFFS[k].sha256 === sha);
+    assert.equal(tags.length, 1, `${p}: sha256 ${sha} matches no diff`);
+    assert.ok(data.equals(fs.readFileSync(path.join(ROOT, 'sources', DIFFS[tags[0]].file))));
+  }
+});

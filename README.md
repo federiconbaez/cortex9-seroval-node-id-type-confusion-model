@@ -59,6 +59,12 @@ All cited ranges and the text each must contain are in `citations.tsv`;
 `test/citations.test.js` checks the SHA-256, the text of every range, and
 that no citation in the repo is missing from the table or lacks a tag.
 
+Optionally, `C9_DIFF=<diff>[:<diff>]` (a fresh download of the upstream
+commit diff) is checked to be byte-identical to the in-repo copy:
+`C9_DIFF=/tmp/x.diff node --test test/citations.test.js`. Without it that one check is reported as an
+explicit skip; the in-repo copies are always checked. License notice of the
+copies: `sources/README.md`, `sources/UPSTREAM-LICENSE`.
+
 ## Run
 
 ```sh
