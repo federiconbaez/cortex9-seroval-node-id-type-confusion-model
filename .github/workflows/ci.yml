@@ -1,0 +1,26 @@
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["20", "22", "24"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Syntax check (no dependencies, nothing installed)
+        run: for f in src/*.js scripts/*.js test/*.js; do node --check "$f"; done
+      - name: Unit, fixture, adversarial and practice tests (node:test)
+        run: node --test test/*.test.js
+      - name: Independent expectations (Python) still match the committed fixtures
+        run: python3 scripts/derive_expected.py | diff - fixtures/expected.tsv
+      - name: Regenerate results and compare with committed artifacts
+        run: |
+          node scripts/gen_results.js /tmp/results
+          diff -r results /tmp/results
+          cd results && sha256sum -c SHA256SUMS

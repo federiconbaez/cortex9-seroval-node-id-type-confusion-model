@@ -1,0 +1,28 @@
+id,class,version,label,foreign_calls,rule,diff
+p01_plain_object_reuses_sequence_id,pos,v163,FORGED_SEQUENCE_ACCEPTED,0,advisory <=1.6.3,50926b3 L118-165 (upstream regression test shape)
+p01_plain_object_reuses_sequence_id,pos,pre,FORGED_SEQUENCE_ACCEPTED,0,50926b3 L38-46,50926b3 L118-165 (upstream regression test shape)
+p01_plain_object_reuses_sequence_id,pos,post,MALFORMED_NODE,0,50926b3 L43-45,50926b3 L118-165 (upstream regression test shape)
+p02_plugin_callable_reuses_stream_id,pos,v163,FOREIGN_ON_INVOKED,1,advisory <=1.6.3,50926b3 L167-185
+p02_plugin_callable_reuses_stream_id,pos,pre,FOREIGN_ON_INVOKED,1,50926b3 L60-69,50926b3 L167-185
+p02_plugin_callable_reuses_stream_id,pos,post,MALFORMED_NODE,0,50926b3 L66-68,50926b3 L167-185
+p03_branded_pojo_reuses_stream_id,pos,v163,FOREIGN_ON_INVOKED,1,advisory <=1.6.3,3edc78b L305-314; 50926b3 L60-69
+p03_branded_pojo_reuses_stream_id,pos,pre,FOREIGN_ON_INVOKED,1,50926b3 L60-69,3edc78b L305-314; 50926b3 L60-69
+p03_branded_pojo_reuses_stream_id,pos,post,MALFORMED_NODE,0,50926b3 L66-68,3edc78b L305-314; 50926b3 L60-69
+p04_plugin_callable_fresh_id,pos,v163,FOREIGN_ON_INVOKED,1,advisory <=1.6.3,advisory Summary (pre-1.6.4 variant); 50926b3 L60
+p04_plugin_callable_fresh_id,pos,pre,NODE_TYPE_MISMATCH,0,50926b3 L60,advisory Summary (pre-1.6.4 variant); 50926b3 L60
+p04_plugin_callable_fresh_id,pos,post,MALFORMED_NODE,0,50926b3 L66-68,advisory Summary (pre-1.6.4 variant); 50926b3 L60
+c01_tracked_id_reuse_is_guarded,control,v163,REUSED_ID_REJECTED,0,50926b3 L36-37,"50926b3 L11, L35-37"
+c01_tracked_id_reuse_is_guarded,control,pre,REUSED_ID_REJECTED,0,50926b3 L36-37,"50926b3 L11, L35-37"
+c01_tracked_id_reuse_is_guarded,control,post,REUSED_ID_REJECTED,0,50926b3 L36-37,"50926b3 L11, L35-37"
+n01_genuine_sequence_iterator,neg,v163,OK,0,-,50926b3 L43-47
+n01_genuine_sequence_iterator,neg,pre,OK,0,-,50926b3 L43-47
+n01_genuine_sequence_iterator,neg,post,OK,0,-,50926b3 L43-47
+n02_genuine_stream_async_iterator,neg,v163,OK,0,-,50926b3 L66-70
+n02_genuine_stream_async_iterator,neg,pre,OK,0,-,50926b3 L66-70
+n02_genuine_stream_async_iterator,neg,post,OK,0,-,50926b3 L66-70
+n03_plain_graph_no_iterators,neg,v163,OK,0,-,-
+n03_plain_graph_no_iterators,neg,pre,OK,0,-,-
+n03_plain_graph_no_iterators,neg,post,OK,0,-,-
+n04_inline_genuine_sequence,neg,v163,OK,0,-,50926b3 L43-47
+n04_inline_genuine_sequence,neg,pre,OK,0,-,50926b3 L43-47
+n04_inline_genuine_sequence,neg,post,OK,0,-,50926b3 L43-47
